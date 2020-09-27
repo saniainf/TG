@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace TGWPFTest
+namespace TG
 {
     public partial class MainWindow : Window
     {
