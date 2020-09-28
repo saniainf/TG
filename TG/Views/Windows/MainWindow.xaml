@@ -11,13 +11,31 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-
-    <Grid>
-        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                 Width="150"
-                 Height="20"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Left" 
-                 Margin="20"/>
-    </Grid>
+    
+    <DockPanel x:Name="MainPanel">
+        <Menu x:Name="MainMenu" DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="О программе"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Status}" Width="150"></TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <ProgressBar Height="12" Width="150" Value="{Binding Progress}"></ProgressBar>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Slider Width="150" Value="{Binding Progress}" Minimum="0" Maximum="100"/>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl x:Name="MainTabControl">
+            <TabItem Header="Вкладка 1"/>
+            <TabItem Header="Вкладка 2"/>
+        </TabControl>
+    </DockPanel>
+    
 </Window>
