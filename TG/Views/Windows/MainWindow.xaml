@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:cmd="clr-namespace:TG.Infrastructure.Commands"
         xmlns:vm="clr-namespace:TG.ViewModels" 
         xmlns:l="clr-namespace:TG"
@@ -12,9 +13,12 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
+    <Window.Resources>
+        <cmd:CloseAplicationCommand x:Key="CloseAplicationCommand"/>
+        <cmd:CloseTabItemCommand x:Key="CloseTabItemCommand"/>
+    </Window.Resources>
     <DockPanel x:Name="MainPanel">
-        <Menu x:Name="MainMenu" DockPanel.Dock="Top">
+        <Menu x:Name="MainMenu" DockPanel.Dock="Top" Margin="0,0,0,5">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Command="{Binding CloseAplicationCommand}"/>
             </MenuItem>
@@ -22,20 +26,33 @@
                 <MenuItem Header="О программе"/>
             </MenuItem>
         </Menu>
-        <ToolBar DockPanel.Dock="Top">
-            <Button Content="X">
+        <ToolBar DockPanel.Dock="Top" Margin="0,0,0,5">
+            <Button Width="25" Height="25">
+                <Button.Content>
+                    <fa:ImageAwesome Icon="Solid_WindowClose"/>
+                </Button.Content>
                 <Button.Command>
                     <cmd:CloseAplicationCommand/>
                 </Button.Command>
             </Button>
             <Separator/>
-            <ToggleButton Content="O"/>
+            <Button Width="25" Height="25" Command="{StaticResource CloseAplicationCommand}">
+                <Button.Content>
+                    <fa:ImageAwesome Icon="Regular_WindowClose"/>
+                </Button.Content>
+            </Button>
+            <Separator/>
+            <ToggleButton Width="25" Height="25">
+                <ToggleButton.Content>
+                    <fa:ImageAwesome Icon="Brands_Adobe"/>
+                </ToggleButton.Content>
+            </ToggleButton>
             <Separator/>
             <TextBox Foreground="LightGray" Width="200">Поиск...</TextBox>
         </ToolBar>
         <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Text="{Binding Status}" Width="150"></TextBlock>
+                <TextBlock Text="{Binding ElementName=MainTabControl, Path=SelectedIndex}"  Width="150"></TextBlock>
             </StatusBarItem>
             <StatusBarItem>
                 <ProgressBar Height="12" Width="150" Value="{Binding Progress}"></ProgressBar>
@@ -44,8 +61,19 @@
                 <Slider Width="150" Value="{Binding Progress}" Minimum="0" Maximum="100"/>
             </StatusBarItem>
         </StatusBar>
-        <TabControl x:Name="MainTabControl">
-            <TabItem Header="Вкладка 1"/>
+        <TabControl x:Name="MainTabControl" Margin="0,0,0,5">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Вкладка 1"/>
+                        <Button Height="16" Width="16" Margin="4,0,0,0" Command="{StaticResource CloseTabItemCommand}" CommandParameter="{Binding ElementName=MainTabControl}">
+                            <Button.Content>
+                                <fa:SvgAwesome Icon="Regular_WindowClose"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
             <TabItem Header="Вкладка 2"/>
         </TabControl>
     </DockPanel>
