@@ -5,16 +5,14 @@ namespace TG.Infrastructure.Commands.Base
 {
     internal abstract class Command : ICommand
     {
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
+        public event EventHandler CanExecuteChanged
         {
-            throw new NotImplementedException();
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
-        public void Execute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool CanExecute(object parameter);
+
+        public abstract void Execute(object parameter);
     }
 }
