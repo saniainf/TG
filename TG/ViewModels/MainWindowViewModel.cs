@@ -1,4 +1,7 @@
-﻿using TG.ViewModels.Base;
+﻿using System.Windows;
+using System.Windows.Input;
+using TG.Infrastructure.Commands;
+using TG.ViewModels.Base;
 
 namespace TG.ViewModels
 {
@@ -6,41 +9,67 @@ namespace TG.ViewModels
     {
         #region Title : Заголовок окна
 
-        private string _Title = "Работа Типографии";
+        private string title = "Работа Типографии";
 
         /// <summary> Заголовок окна </summary>
         public string Title
         {
-            get => _Title;
-            set => Set(ref _Title, value);
+            get => title;
+            set => Set(ref title, value);
         }
 
         #endregion
 
         #region Status : Статус программы
 
-        private string _Status = "Все готово";
+        private string status = "Все готово";
 
         /// <summary> Статус программы </summary>
         public string Status
         {
-            get => _Status;
-            set => Set(ref _Status, value);
+            get => status;
+            set => Set(ref status, value);
         }
 
         #endregion
 
         #region Progress : Прогресс выполнения
 
-        private double _Progress;
+        private double progress;
 
         /// <summary> Прогресс выполнения </summary>
         public double Progress
         {
-            get => _Progress;
-            set => Set(ref _Progress, value);
+            get => progress;
+            set => Set(ref progress, value);
         }
 
         #endregion
+
+        #region Команды
+
+        #region CloseAplicationCommand : Закрытие программы
+
+        public ICommand CloseAplicationCommand { get; }
+
+        private bool CanCloseAplicationCommand(object p) => true;
+
+        private void OnCloseAplicationCommand(object p)
+        {
+            Application.Current.Shutdown(0);
+        }
+
+        #endregion
+
+        #endregion
+
+        public MainWindowViewModel()
+        {
+            #region Команды
+
+            CloseAplicationCommand = new LambdaCommand(OnCloseAplicationCommand, CanCloseAplicationCommand);
+
+            #endregion
+        }
     }
 }

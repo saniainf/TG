@@ -8,16 +8,16 @@ namespace TG.ViewModels.Base
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName]string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
+        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(field, value)) return false;
             field = value;
-            OnPropertyChanged(PropertyName);
+            OnPropertyChanged(propertyName);
             return true;
         }
 
@@ -26,12 +26,12 @@ namespace TG.ViewModels.Base
             Dispose(true);
         }
 
-        private bool _Disposed;
+        private bool disposed;
 
-        protected virtual void Dispose(bool Disposing)
+        protected virtual void Dispose(bool disposing)
         {
-            if (!Disposing || _Disposed) return;
-            _Disposed = true;
+            if (!disposing || disposed) return;
+            disposed = true;
         }
     }
 }
