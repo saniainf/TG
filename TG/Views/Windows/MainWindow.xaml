@@ -49,10 +49,22 @@
             </ToggleButton>
             <Separator/>
             <TextBox Foreground="LightGray" Width="200">Поиск...</TextBox>
+            <Separator/>
+            <fa:SvgAwesome Icon="Solid_ArrowLeft" Height="20" Margin="2">
+                <fa:SvgAwesome.InputBindings>
+                    <MouseBinding Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1" MouseAction="LeftClick" />
+                </fa:SvgAwesome.InputBindings>
+            </fa:SvgAwesome>
+            <fa:SvgAwesome Icon="Solid_ArrowRight" Height="20" Margin="2">
+                <fa:SvgAwesome.InputBindings>
+                    <MouseBinding Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1" MouseAction="LeftClick" />
+                </fa:SvgAwesome.InputBindings>
+            </fa:SvgAwesome>
+            <Separator/>
         </ToolBar>
         <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Text="{Binding ElementName=MainTabControl, Path=SelectedIndex}"  Width="150"></TextBlock>
+                <TextBlock Text="{Binding SelectedPageIndex}"  Width="150"></TextBlock>
             </StatusBarItem>
             <StatusBarItem>
                 <ProgressBar Height="12" Width="150" Value="{Binding Progress}"></ProgressBar>
@@ -61,7 +73,7 @@
                 <Slider Width="150" Value="{Binding Progress}" Minimum="0" Maximum="100"/>
             </StatusBarItem>
         </StatusBar>
-        <TabControl x:Name="MainTabControl" Margin="0,0,0,5">
+        <TabControl x:Name="MainTabControl" Margin="0,0,0,5" SelectedIndex="{Binding SelectedPageIndex}">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -77,5 +89,5 @@
             <TabItem Header="Вкладка 2"/>
         </TabControl>
     </DockPanel>
-    
+
 </Window>

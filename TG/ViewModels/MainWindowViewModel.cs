@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using TG.Infrastructure.Commands;
 using TG.ViewModels.Base;
@@ -7,6 +8,8 @@ namespace TG.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        #region Свойства
+
         #region Title : Заголовок окна
 
         private string title = "Работа Типографии";
@@ -46,17 +49,46 @@ namespace TG.ViewModels
 
         #endregion
 
+        #region SelectedPageIndex : Номер выбранной вкладки
+
+        private double selectedPageIndex = 0;
+
+        /// <summary> Номер выбранной вкладки </summary>
+        public double SelectedPageIndex
+        {
+            get => selectedPageIndex;
+            set => Set(ref selectedPageIndex, value);
+        }
+
+        #endregion
+
+        #endregion
+
         #region Команды
 
         #region CloseAplicationCommand : Закрытие программы
 
         public ICommand CloseAplicationCommand { get; }
 
-        private bool CanCloseAplicationCommand(object p) => true;
+        private bool CanCloseAplicationCommandExecute(object p) => true;
 
-        private void OnCloseAplicationCommand(object p)
+        private void OnCloseAplicationCommandExecuted(object p)
         {
             Application.Current.Shutdown(0);
+        }
+
+        #endregion
+
+        #region ChangeTabIndexCommand : Переключение вкладок
+
+        public ICommand ChangeTabIndexCommand { get; }
+
+        private bool CanChangeTabIndexCommandExecute(object p) => selectedPageIndex >= 0;
+
+        private void OnChangeTabIndexCommandExecuted(object p)
+        {
+            if (p is null) return;
+            SelectedPageIndex += Convert.ToInt32(p);
         }
 
         #endregion
@@ -67,7 +99,9 @@ namespace TG.ViewModels
         {
             #region Команды
 
-            CloseAplicationCommand = new LambdaCommand(OnCloseAplicationCommand, CanCloseAplicationCommand);
+            CloseAplicationCommand = new LambdaCommand(OnCloseAplicationCommandExecuted, CanCloseAplicationCommandExecute);
+
+            ChangeTabIndexCommand = new LambdaCommand(OnChangeTabIndexCommandExecuted, CanChangeTabIndexCommandExecute);
 
             #endregion
         }
