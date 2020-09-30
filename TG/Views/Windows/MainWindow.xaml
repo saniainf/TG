@@ -38,13 +38,13 @@
             <Separator/>
             <Button Width="25" Height="25" Command="{StaticResource CloseAplicationCommand}">
                 <Button.Content>
-                    <fa:ImageAwesome Icon="Regular_WindowClose"/>
+                    <fa:ImageAwesome Icon="Regular_WindowClose" Foreground="Green"/>
                 </Button.Content>
             </Button>
             <Separator/>
             <ToggleButton Width="25" Height="25">
                 <ToggleButton.Content>
-                    <fa:ImageAwesome Icon="Brands_Adobe"/>
+                    <fa:ImageAwesome Icon="Brands_Adobe" Foreground="red"/>
                 </ToggleButton.Content>
             </ToggleButton>
             <Separator/>
