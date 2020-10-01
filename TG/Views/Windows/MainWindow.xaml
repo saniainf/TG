@@ -64,7 +64,7 @@
         </ToolBar>
         <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Text="{Binding SelectedPageIndex}"  Width="150"></TextBlock>
+                <TextBlock x:Name="StatusText" Text="{Binding Status}"  Width="150"></TextBlock>
             </StatusBarItem>
             <StatusBarItem>
                 <ProgressBar Height="12" Width="150" Value="{Binding Progress}"></ProgressBar>
@@ -86,7 +86,20 @@
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>
-            <TabItem Header="Вкладка 2"/>
+            <TabItem Header="Пользователи">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Отделы" Margin="5,0,5,5">
+                        <ListBox Margin="5" ItemsSource="{Binding Departments}" DisplayMemberPath="Name"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="Пользователи" Margin="0,0,5,5">
+                        
+                    </GroupBox>
+                </Grid>
+            </TabItem>
         </TabControl>
     </DockPanel>
 

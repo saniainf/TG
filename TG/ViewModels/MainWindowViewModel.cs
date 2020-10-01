@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Windows;
 using System.Windows.Input;
 using TG.Infrastructure.Commands;
+using TG.Models.Company;
 using TG.ViewModels.Base;
 
 namespace TG.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        public ObservableCollection<Department> Departments { get; }
+
         #region Свойства
 
         #region Title : Заголовок окна
@@ -104,6 +110,21 @@ namespace TG.ViewModels
             ChangeTabIndexCommand = new LambdaCommand(OnChangeTabIndexCommandExecuted, CanChangeTabIndexCommandExecute);
 
             #endregion
+
+            var users = Enumerable.Range(1, 15).Select(i => new User()
+            {
+                Name = "John",
+                Surname = $"Smith_{i:d2}",
+                Birthday = DateTime.Now,
+                Rating = 1
+            });
+            var departments = Enumerable.Range(1, 10).Select(i => new Department()
+            {
+                Users = users.ToArray(),
+                Name = $"Отдел №{i:d2}"
+            });
+
+            Departments = new ObservableCollection<Department>(departments);
         }
     }
 }
