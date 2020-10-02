@@ -74,6 +74,39 @@
             </StatusBarItem>
         </StatusBar>
         <TabControl x:Name="MainTabControl" Margin="0,0,0,5" SelectedIndex="{Binding SelectedPageIndex}">
+            <TabItem Header="Пользователи">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
+                        <ListBox Margin="5" 
+                                 ItemsSource="{Binding Departments}" 
+                                 DisplayMemberPath="Name" 
+                                 SelectedItem="{Binding SelectedDepartment}" 
+                                 SelectedIndex="0"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" 
+                              HeaderStringFormat="Пользователи - отдел &quot;{0}&quot;" 
+                              Header="{Binding SelectedDepartment.Name, FallbackValue='Пользователи', TargetNullValue='Отдел не выбран'}" 
+                              Margin="0,0,5,5">
+                        <DataGrid Margin="5" 
+                                  ItemsSource="{Binding SelectedDepartment.Users}" 
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                                <DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
+                                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}"/>
+                                <DataGridTextColumn Header="Отдел" Binding="{Binding DataContext.SelectedDepartment.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -85,20 +118,6 @@
                         </Button>
                     </StackPanel>
                 </TabItem.Header>
-            </TabItem>
-            <TabItem Header="Пользователи">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Header="Отделы" Margin="5,0,5,5">
-                        <ListBox Margin="5" ItemsSource="{Binding Departments}" DisplayMemberPath="Name"/>
-                    </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Пользователи" Margin="0,0,5,5">
-                        
-                    </GroupBox>
-                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

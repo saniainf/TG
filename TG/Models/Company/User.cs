@@ -7,9 +7,9 @@ namespace TG.Models.Company
     {
         public string Name { get; set; }
 
-        public string Surname { get; set; }
-
         public string Patronymic { get; set; }
+
+        public string Surname { get; set; }
 
         public DateTime Birthday { get; set; }
 

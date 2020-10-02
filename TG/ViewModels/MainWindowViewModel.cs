@@ -12,9 +12,24 @@ namespace TG.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        public ObservableCollection<Department> Departments { get; }
 
         #region Свойства
+
+
+        public ObservableCollection<Department> Departments { get; }
+
+        #region SelectedDepartment : Выбранный отдел
+
+        private Department department;
+
+        /// <summary> Выбранный отдел </summary>
+        public Department SelectedDepartment
+        {
+            get => department;
+            set => Set(ref department, value);
+        }
+
+        #endregion
 
         #region Title : Заголовок окна
 
@@ -111,20 +126,27 @@ namespace TG.ViewModels
 
             #endregion
 
+            #region Тестовые данные
+
+            var idx = 0;
+
             var users = Enumerable.Range(1, 15).Select(i => new User()
             {
                 Name = "John",
-                Surname = $"Smith_{i:d2}",
+                Patronymic = $"Johnovich",
+                Surname = $"Smith_{idx++:d2}",
                 Birthday = DateTime.Now,
                 Rating = 1
             });
             var departments = Enumerable.Range(1, 10).Select(i => new Department()
             {
                 Users = users.ToArray(),
-                Name = $"Отдел №{i:d2}"
+                Name = $"Название отдела №{i:d2}"
             });
 
             Departments = new ObservableCollection<Department>(departments);
+
+            #endregion
         }
     }
 }
