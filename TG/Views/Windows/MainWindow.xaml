@@ -94,12 +94,17 @@
                         <DataGrid Margin="5" 
                                   ItemsSource="{Binding SelectedDepartment.Users}" 
                                   AutoGenerateColumns="False"
-                                  IsReadOnly="True">
+                                  IsReadOnly="True" 
+                                  GridLinesVisibility="Vertical"
+                                  VerticalGridLinesBrush="DarkGray"
+                                  AlternatingRowBackground="LightGray"
+                                  MinRowHeight="24" 
+                                  SelectionMode="Single">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
                                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
-                                <DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd.MM.yyyy}"/>
+                                <DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>
                                 <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}"/>
                                 <DataGridTextColumn Header="Отдел" Binding="{Binding DataContext.SelectedDepartment.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                             </DataGrid.Columns>
