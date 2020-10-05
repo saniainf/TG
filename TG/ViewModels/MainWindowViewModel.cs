@@ -136,12 +136,14 @@ namespace TG.ViewModels
                 Patronymic = $"Johnovich",
                 Surname = $"Smith_{idx++:d2}",
                 Birthday = DateTime.Now,
-                Rating = 1
+                Rating = 1,
+                Description = "Пользователь Ok"
             });
             var departments = Enumerable.Range(1, 10).Select(i => new Department()
             {
                 Users = users.ToArray(),
-                Name = $"Название отдела №{i:d2}"
+                Name = $"Название отдела №{i:d2}",
+                Description = "Отдел Ok"
             });
 
             Departments = new ObservableCollection<Department>(departments);

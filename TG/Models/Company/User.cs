@@ -14,6 +14,8 @@ namespace TG.Models.Company
         public DateTime Birthday { get; set; }
 
         public double Rating { get; set; }
+
+        public string Description { get; set; }
     }
 
     internal class Department
@@ -21,5 +23,7 @@ namespace TG.Models.Company
         public string Name { get; set; }
 
         public ICollection<User> Users { get; set; }
+
+        public string Description { get; set; }
     }
 }
