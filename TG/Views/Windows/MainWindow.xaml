@@ -11,10 +11,13 @@
         mc:Ignorable="d"
         Title="{Binding Title}" 
         Height="450" Width="800">
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
     <DockPanel x:Name="MainPanel">
+
         <Menu x:Name="MainMenu" DockPanel.Dock="Top" Margin="0,0,0,5">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Command="{Binding CloseAplicationCommand}"/>
@@ -23,7 +26,9 @@
                 <MenuItem Header="О программе"/>
             </MenuItem>
         </Menu>
+
         <ToolBar DockPanel.Dock="Top" Margin="0,0,0,5">
+
             <Button Width="25" Height="25">
                 <Button.Content>
                     <fa:ImageAwesome Icon="Solid_WindowClose"/>
@@ -32,21 +37,29 @@
                     <cmd:CloseAplicationCommand/>
                 </Button.Command>
             </Button>
+
             <Separator/>
+
             <Button Width="25" Height="25" Command="{StaticResource CloseAplicationCommand}">
                 <Button.Content>
                     <fa:ImageAwesome Icon="Regular_WindowClose" Foreground="Green"/>
                 </Button.Content>
             </Button>
+
             <Separator/>
+
             <ToggleButton Width="25" Height="25">
                 <ToggleButton.Content>
                     <fa:ImageAwesome Icon="Brands_Adobe" Foreground="red"/>
                 </ToggleButton.Content>
             </ToggleButton>
+
             <Separator/>
+
             <TextBox Foreground="LightGray" Width="200">Поиск...</TextBox>
+
             <Separator/>
+
             <fa:SvgAwesome Icon="Solid_ArrowLeft" Height="20" Margin="2">
                 <fa:SvgAwesome.InputBindings>
                     <MouseBinding Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1" MouseAction="LeftClick" />
@@ -57,46 +70,90 @@
                     <MouseBinding Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1" MouseAction="LeftClick" />
                 </fa:SvgAwesome.InputBindings>
             </fa:SvgAwesome>
+
             <Separator/>
+
         </ToolBar>
+
         <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
+
             <StatusBarItem>
                 <TextBlock x:Name="StatusText" Text="{Binding Status}"  Width="150"></TextBlock>
             </StatusBarItem>
+
             <StatusBarItem>
                 <ProgressBar Height="12" Width="150" Value="{Binding Progress}"></ProgressBar>
             </StatusBarItem>
+
             <StatusBarItem>
                 <Slider Width="150" Value="{Binding Progress}" Minimum="0" Maximum="100"/>
             </StatusBarItem>
+
         </StatusBar>
+
         <TabControl x:Name="MainTabControl" Margin="0,0,0,5" SelectedIndex="{Binding SelectedPageIndex}">
+
+            <TabItem Header="Разнородные данные">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Элементы" Margin="5,0,5,5">
+                        <GroupBox.Resources>
+                            <DataTemplate DataType="{x:Type company:Department}">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GroupBox.Resources>
+                        
+                        <ListBox ItemsSource="{Binding CompositeCollection}" 
+                             SelectedItem="{Binding SelectedCompositeValue}" 
+                             Margin="3">
+                        </ListBox>
+                        
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Выбранный элемент" Margin="0,0,5,5">
+                        <GroupBox.Resources>
+                            <DataTemplate DataType="{x:Type company:Department}">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GroupBox.Resources>
+                        
+                        <ContentControl Content="{Binding SelectedCompositeValue}">
+
+                        </ContentControl>
+                    </GroupBox>
+
+                </Grid>
+            </TabItem>
+
             <TabItem Header="Пользователи">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="250"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+
                     <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
                         <ListBox Margin="5" 
                                  ItemsSource="{Binding Departments}" 
-                                 DisplayMemberPath="Name" 
                                  SelectedItem="{Binding SelectedDepartment}" 
                                  SelectedIndex="0"
                                  ItemContainerStyle="{StaticResource ContainerStyle}">
-                            <!--<ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Height" Value="26" />
-                                </Style>
-                            </ListBox.ItemContainerStyle>-->
-                            <!--<ListBox.Resources>
-                                --><!-- Background of selected item when focussed --><!--
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Green"/>
-                                --><!-- Background of selected item when not focussed --><!--
-                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightGreen" />
-                            </ListBox.Resources>-->
+                            <!--DisplayMemberPath="Name"-->
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="company:Department">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Users.Count, StringFormat={}   Всего: {0}}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </GroupBox>
+
                     <GroupBox Grid.Column="1" 
                               HeaderStringFormat="Пользователи - отдел &quot;{0}&quot;" 
                               Header="{Binding SelectedDepartment.Name, FallbackValue='Пользователи', TargetNullValue='Отдел не выбран'}" 
@@ -172,7 +229,9 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
+
             <TabItem>
+
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Вкладка 1"/>
@@ -183,8 +242,11 @@
                         </Button>
                     </StackPanel>
                 </TabItem.Header>
+
             </TabItem>
+
         </TabControl>
+
     </DockPanel>
 
 </Window>

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using TG.Infrastructure.Commands;
 using TG.Models.Company;
@@ -15,8 +17,22 @@ namespace TG.ViewModels
 
         #region Свойства
 
+        public object[] CompositeCollection { get; }
 
         public ObservableCollection<Department> Departments { get; }
+
+        #region SelectedCompositeValue : Выбранное значение из CompositeCollection
+
+        private object selectValue;
+
+        /// <summary> Выбранный отдел </summary>
+        public object SelectedCompositeValue
+        {
+            get => selectValue;
+            set => Set(ref selectValue, value);
+        }
+
+        #endregion
 
         #region SelectedDepartment : Выбранный отдел
 
@@ -147,6 +163,14 @@ namespace TG.ViewModels
             });
 
             Departments = new ObservableCollection<Department>(departments);
+
+            var dataList = new List<object>();
+
+            dataList.Add("string literal");
+            dataList.Add(42);
+            dataList.Add(departments.First());
+            dataList.Add(departments.First().Users.ToArray());
+            CompositeCollection = dataList.ToArray();
 
             #endregion
         }
