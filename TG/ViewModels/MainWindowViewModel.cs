@@ -158,7 +158,7 @@ namespace TG.ViewModels
             var departments = Enumerable.Range(1, 10).Select(i => new Department()
             {
                 Users = users.ToArray(),
-                Name = $"Название отдела №{i:d2}",
+                Name = $"Отдел №{i:d2}",
                 Description = "Отдел Ok"
             });
 
@@ -169,7 +169,7 @@ namespace TG.ViewModels
             dataList.Add("string literal");
             dataList.Add(42);
             dataList.Add(departments.First());
-            dataList.Add(departments.First().Users.ToArray());
+            dataList.Add(departments.First().Users.First());
             CompositeCollection = dataList.ToArray();
 
             #endregion
