@@ -107,11 +107,11 @@
                              SelectedItem="{Binding SelectedCompositeValue}" 
                              Margin="3">
                             <ListBox.Resources>
-                                
+
                                 <DataTemplate DataType="{x:Type company:Department}">
                                     <TextBlock Text="{Binding Name}"/>
                                 </DataTemplate>
-                                
+
                                 <DataTemplate DataType="{x:Type company:User}">
                                     <TextBlock>
                                         <TextBlock.Text>
@@ -123,7 +123,7 @@
                                         </TextBlock.Text>
                                     </TextBlock>
                                 </DataTemplate>
-                                
+
                                 <DataTemplate DataType="{x:Type sys:String}">
                                     <TextBlock>
                                         <Run Foreground="Green" FontWeight="Bold" Text="Строка: "/>
@@ -136,7 +136,7 @@
                                         Число:  <Run Text="{Binding Path=.}"/>
                                     </TextBlock>
                                 </DataTemplate>
-                                
+
                             </ListBox.Resources>
                         </ListBox>
 
@@ -205,21 +205,28 @@
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
-                        <ListBox Margin="5" 
+                        <DockPanel>
+                            <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
+                                <Button Content="Добавить" Margin="0,0,2.5,0" Command="{Binding CreateDepartmentCommand}"/>
+                                <Button Content="Удалить" Margin="2.5,0,0,0" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}"/>
+                            </UniformGrid>
+                            <ListBox Margin="5,5,5,0" 
                                  ItemsSource="{Binding Departments}" 
                                  SelectedItem="{Binding SelectedDepartment}" 
                                  SelectedIndex="0"
                                  ItemContainerStyle="{StaticResource ContainerStyle}">
-                            <!--DisplayMemberPath="Name"-->
-                            <ListBox.ItemTemplate>
-                                <DataTemplate DataType="company:Department">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="{Binding Users.Count, StringFormat={}  [Пользователей: {0}]}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                                <!--DisplayMemberPath="Name"-->
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="company:Department">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Users.Count, StringFormat={}  [Пользователей: {0}]}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                        </DockPanel>
                     </GroupBox>
 
                     <GroupBox Grid.Column="1" 

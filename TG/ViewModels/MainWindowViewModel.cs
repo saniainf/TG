@@ -130,6 +130,57 @@ namespace TG.ViewModels
 
         #endregion
 
+        #region CreateDepartmentCommand : Создать отдел
+
+        public ICommand CreateDepartmentCommand { get; }
+
+        private bool CanCreateDepartmentCommandExecute(object p) => true;
+
+        private void OnCreateDepartmentCommandExecuted(object p)
+        {
+            var idx = 0;
+            var users = Enumerable.Range(1, 15).Select(i => new User()
+            {
+                Name = "John",
+                Patronymic = $"Johnovich",
+                Surname = $"Smith_{idx++:d2}",
+                Birthday = DateTime.Now,
+                Rating = 1,
+                Description = "Пользователь Ok"
+            });
+
+            var departmentIdx = Departments.Count + 1;
+            var newDepartment = new Department
+            {
+                Users = users.ToArray(),
+                Name = $"Отдел №{departmentIdx:d2}",
+                Description = "Отдел Ok"
+            };
+
+            Departments.Add(newDepartment);
+        }
+
+        #endregion
+
+        #region DeleteDepartmentCommand : Удалить отдел
+
+        public ICommand DeleteDepartmentCommand { get; }
+
+        private bool CanDeleteDepartmentCommandExecute(object p) => p is Department department && Departments.Contains(department);
+
+        private void OnDeleteDepartmentCommandExecuted(object p)
+        {
+            if (!(p is Department department)) return;
+            var departmentIdx = Departments.IndexOf(department);
+            Departments.Remove(department);
+            if (departmentIdx < Departments.Count)
+                SelectedDepartment = Departments[departmentIdx];
+            else if (Departments.Count > 0)
+                SelectedDepartment = Departments.Last();
+        }
+
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
@@ -139,6 +190,10 @@ namespace TG.ViewModels
             CloseAplicationCommand = new LambdaCommand(OnCloseAplicationCommandExecuted, CanCloseAplicationCommandExecute);
 
             ChangeTabIndexCommand = new LambdaCommand(OnChangeTabIndexCommandExecuted, CanChangeTabIndexCommandExecute);
+
+            CreateDepartmentCommand = new LambdaCommand(OnCreateDepartmentCommandExecuted, CanCreateDepartmentCommandExecute);
+
+            DeleteDepartmentCommand = new LambdaCommand(OnDeleteDepartmentCommandExecuted, CanDeleteDepartmentCommandExecute);
 
             #endregion
 
