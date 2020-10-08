@@ -158,6 +158,7 @@ namespace TG.ViewModels
             };
 
             Departments.Add(newDepartment);
+            SelectedDepartment = newDepartment;
         }
 
         #endregion
