@@ -5,24 +5,25 @@
              xmlns:cmd="clr-namespace:TG.Infrastructure.Commands"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
-        
-            <cmd:CloseAplicationCommand x:Key="CloseAplicationCommand"/>
-        
-            <cmd:CloseTabItemCommand x:Key="CloseTabItemCommand"/>
-        
-            <Style x:Key="DataGridContentCellCentering" TargetType="{x:Type DataGridCell}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type DataGridCell}">
-                            <Grid Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center" />
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
 
-        <Style TargetType="ListBoxItem" x:Key="ContainerStyle">
+        <cmd:CloseAplicationCommand x:Key="CloseAplicationCommand"/>
+
+        <cmd:CloseTabItemCommand x:Key="CloseTabItemCommand"/>
+
+        <Style x:Key="DataGridContentCellCentering" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ContainerStyle" TargetType="{x:Type ListBoxItem}">
+
             <!--<Setter Property="Opacity" Value="0.5" />
             <Setter Property="Height" Value="26" />
             <Style.Triggers>
@@ -31,16 +32,42 @@
                     <Setter Property="Foreground" Value="Black"/>
                 </Trigger>
             </Style.Triggers>-->
-            <Setter Property="Background" Value="LightSteelBlue"/>
+
+            <!--<Setter Property="Background" Value="LightSteelBlue"/>
             <Setter Property="Margin" Value="1"/>
             <Setter Property="Padding" Value="5"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="BorderBrush" Value="DarkOrange"/>
+                     <Setter Property="FontStyle" Value="Italic"/>
+                     <Setter Property="Background" Value="Orange"/>
                 </Trigger>
-            </Style.Triggers>
+            </Style.Triggers>-->
+
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Name="Border" 
+                                Padding="5" 
+                                SnapsToDevicePixels="true" 
+                                Background="Transparent"
+                                BorderThickness="2"
+                                CornerRadius="7"
+                                BorderBrush="Transparent">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="DarkOrange"/>
+                                <Setter TargetName="Border" Property="Background" Value="#FFEDCC"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
         </Style>
 
     </Application.Resources>

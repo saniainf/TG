@@ -208,14 +208,14 @@
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
                                 <UniformGrid.Resources>
-                                    <Style x:Key="ButtonStyle" TargetType="Button">
+                                    <Style TargetType="{x:Type Button}"> <!--x:Key="ButtonStyle"-->
                                         <Setter Property="Margin" Value="3,0"/>
                                         <Setter Property="Padding" Value="3,5"/>
                                         <Setter Property="Background" Value="Wheat"/>
                                     </Style>
                                 </UniformGrid.Resources>
-                                <Button Content="Добавить" Style="{StaticResource ButtonStyle}" Command="{Binding CreateDepartmentCommand}"/>
-                                <Button Content="Удалить" Style="{StaticResource ButtonStyle}" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}"/>
+                                <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}"/>
+                                <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}"/>
                             </UniformGrid>
                             <ListBox Margin="5,5,5,0" 
                                  ItemsSource="{Binding Departments}" 
