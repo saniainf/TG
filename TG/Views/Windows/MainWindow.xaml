@@ -95,101 +95,30 @@
 
             <TabItem Header="Разнородные данные">
                 <Grid>
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="../../Resources/DataTemplates/CompositeListItemsDataTemplates.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="250"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Grid.Column="0" Header="Элементы" Margin="5,0,5,5">
-
                         <ListBox ItemsSource="{Binding CompositeCollection}" 
-                             SelectedItem="{Binding SelectedCompositeValue}" 
-                             Margin="3">
-                            <ListBox.Resources>
-
-                                <DataTemplate DataType="{x:Type company:Department}">
-                                    <TextBlock Text="{Binding Name}"/>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type company:User}">
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1} {2}">
-                                                <Binding Path="Name"/>
-                                                <Binding Path="Patronymic"/>
-                                                <Binding Path="Surname"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type sys:String}">
-                                    <TextBlock>
-                                        <Run Foreground="Green" FontWeight="Bold" Text="Строка: "/>
-                                        <Run Text="{Binding Mode=OneWay}"/>
-                                    </TextBlock>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type sys:Int32}">
-                                    <TextBlock>
-                                        Число:  <Run Text="{Binding Path=.}"/>
-                                    </TextBlock>
-                                </DataTemplate>
-
-                            </ListBox.Resources>
+                                 SelectedItem="{Binding SelectedCompositeValue}" 
+                                 Margin="3">
                         </ListBox>
-
                     </GroupBox>
 
                     <GroupBox Grid.Column="1" Header="Выбранный элемент" Margin="0,0,5,5">
-                        <GroupBox.Resources>
-                            <DataTemplate DataType="{x:Type company:Department}">
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </GroupBox.Resources>
-
-                        <ContentControl Content="{Binding SelectedCompositeValue}">
-                            <ContentControl.Resources>
-
-                                <DataTemplate DataType="{x:Type company:Department}">
-                                    <TextBlock Text="{Binding Name}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="30"/>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type company:User}">
-                                    <TextBlock HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="30">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1} {2}">
-                                                <Binding Path="Name"/>
-                                                <Binding Path="Patronymic"/>
-                                                <Binding Path="Surname"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type sys:String}">
-                                    <TextBlock HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="30">
-                                        <Run Foreground="Green" FontWeight="Bold" Text="Строка: "/>
-                                        <Run Text="{Binding Mode=OneWay}"/>
-                                    </TextBlock>
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type sys:Int32}">
-                                    <TextBlock HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="30">
-                                        Число:  <Run Text="{Binding Path=.}"/>
-                                    </TextBlock>
-                                </DataTemplate>
-
-                            </ContentControl.Resources>
+                        <ContentControl Content="{Binding SelectedCompositeValue}" 
+                                        FontSize="30" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center">
                         </ContentControl>
                     </GroupBox>
 
