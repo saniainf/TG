@@ -44,11 +44,16 @@
                 <Button.Content>
                     <fa:ImageAwesome Icon="Regular_WindowClose" Foreground="Green"/>
                 </Button.Content>
+                <Button.Triggers>
+                    <!--<Trigger Property="{Binding MutableProperty}" Value="True">
+                        
+                    </Trigger>-->
+                </Button.Triggers>
             </Button>
 
             <Separator/>
 
-            <ToggleButton Width="25" Height="25">
+            <ToggleButton Width="25" Height="25" IsChecked="{Binding MutableProperty}">
                 <ToggleButton.Content>
                     <fa:ImageAwesome Icon="Brands_Adobe" Foreground="red"/>
                 </ToggleButton.Content>
@@ -78,7 +83,7 @@
         <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
 
             <StatusBarItem>
-                <TextBlock x:Name="StatusText" Text="{Binding Status}"  Width="150"></TextBlock>
+                <TextBlock x:Name="StatusText" Text="{Binding MutableProperty}"  Width="150"></TextBlock>
             </StatusBarItem>
 
             <StatusBarItem>

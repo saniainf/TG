@@ -99,6 +99,19 @@ namespace TG.ViewModels
 
         #endregion
 
+        #region MutableProperty : изменяемое свойство
+
+        private bool mutableProperty;
+
+        /// <summary> Номер выбранной вкладки </summary>
+        public bool MutableProperty
+        {
+            get => mutableProperty;
+            set => Set(ref mutableProperty, value);
+        }
+
+        #endregion
+
         #endregion
 
         #region Команды
@@ -178,6 +191,20 @@ namespace TG.ViewModels
                 SelectedDepartment = Departments[departmentIdx];
             else if (Departments.Count > 0)
                 SelectedDepartment = Departments.Last();
+        }
+
+        #endregion
+
+        #region StateChanging : Изменение состояния
+
+        public ICommand StateChangingCommand { get; }
+
+        private bool CanStateChangingCommandExecute(object p) => true;
+
+        private void OnStateChangingCommandExecuted(object p)
+        {
+            if (!(p is bool flag)) return;
+            MutableProperty = flag;
         }
 
         #endregion
