@@ -195,20 +195,6 @@ namespace TG.ViewModels
 
         #endregion
 
-        #region StateChanging : Изменение состояния
-
-        public ICommand StateChangingCommand { get; }
-
-        private bool CanStateChangingCommandExecute(object p) => true;
-
-        private void OnStateChangingCommandExecuted(object p)
-        {
-            if (!(p is bool flag)) return;
-            MutableProperty = flag;
-        }
-
-        #endregion
-
         #endregion
 
         public MainWindowViewModel()

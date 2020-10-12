@@ -44,19 +44,32 @@
                 <Button.Content>
                     <fa:ImageAwesome Icon="Regular_WindowClose" Foreground="Green"/>
                 </Button.Content>
-                <Button.Triggers>
-                    <!--<Trigger Property="{Binding MutableProperty}" Value="True">
-                        
-                    </Trigger>-->
-                </Button.Triggers>
             </Button>
 
             <Separator/>
 
             <ToggleButton Width="25" Height="25" IsChecked="{Binding MutableProperty}">
-                <ToggleButton.Content>
-                    <fa:ImageAwesome Icon="Brands_Adobe" Foreground="red"/>
-                </ToggleButton.Content>
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <ContentPresenter/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <fa:ImageAwesome Icon="Solid_Pause" Foreground="Green"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <fa:ImageAwesome Icon="Solid_Play" Foreground="Red"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ToggleButton.Template>
             </ToggleButton>
 
             <Separator/>
