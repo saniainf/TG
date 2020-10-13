@@ -154,7 +154,7 @@
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
                                 <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
-                                <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
+                                <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource SecondaryButton}"/>
                             </UniformGrid>
                             <ListBox Margin="5,5,5,0" 
                                  ItemsSource="{Binding Departments}" 
