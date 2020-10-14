@@ -165,13 +165,19 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="company:Department">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Name}" x:Name="TextView"/>
                                             <TextBlock Text="{Binding Users.Count, StringFormat={}  [Пользователей: {0}]}"/>
                                         </StackPanel>
+                                        <!-- чето не фурычит, надо перекинуть в стили
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Users.Count}" Value="0">
+                                                <Setter TargetName="TextView" Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                        -->
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-
                         </DockPanel>
                     </GroupBox>
 
