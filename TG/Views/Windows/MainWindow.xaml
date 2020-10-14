@@ -153,8 +153,8 @@
                     <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
-                                <Button Content="Добавить" Tag="Solid_Check" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
-                                <Button Content="Удалить" Tag="Solid_Times" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
+                                <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
+                                <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
                             </UniformGrid>
                             <ListBox Margin="5,5,5,0" 
                                  ItemsSource="{Binding Departments}" 
@@ -252,7 +252,6 @@
             </TabItem>
 
             <TabItem>
-
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Вкладка 1"/>
@@ -263,6 +262,28 @@
                         </Button>
                     </StackPanel>
                 </TabItem.Header>
+
+                <Button Content="Click Me" 
+                        Style="{StaticResource PrimaryButton}" 
+                        Width="150" Height="50"
+                        RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <ScaleTransform x:Name="ButtonScale" ScaleY="1"/>
+                    </Button.RenderTransform>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ButtonScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="0.8" By="-0.01"
+                                                     Duration="0:0:0.1"
+                                                     AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
 
             </TabItem>
 
