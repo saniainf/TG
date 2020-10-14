@@ -7,7 +7,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:cmd="clr-namespace:TG.Infrastructure.Commands"
         xmlns:company="clr-namespace:TG.Models.Company"
-        xmlns:vm="clr-namespace:TG.ViewModels"
+        xmlns:vm="clr-namespace:TG.ViewModels" 
         mc:Ignorable="d"
         Title="{Binding Title}" 
         Height="450" Width="800">
@@ -153,8 +153,8 @@
                     <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
-                                <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
-                                <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource SecondaryButton}"/>
+                                <Button Content="Добавить" Tag="Solid_Check" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
+                                <Button Content="Удалить" Tag="Solid_Times" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
                             </UniformGrid>
                             <ListBox Margin="5,5,5,0" 
                                  ItemsSource="{Binding Departments}" 

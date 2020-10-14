@@ -6,6 +6,9 @@
         <Setter Property="Margin" Value="3,0"/>
     </Style>
 
+    <DropShadowEffect x:Key="ShadowEffectRed" ShadowDepth="2" BlurRadius="3" Color="Red"/>
+    <DropShadowEffect x:Key="ShadowEffectLightGray" ShadowDepth="2" BlurRadius="3" Color="LightGray"/>
+
     <ControlTemplate x:Key="CustomButtonTemplate" TargetType="{x:Type Button}">
         <Border x:Name="border"
                                 Padding="5"
@@ -14,12 +17,16 @@
                                 BorderThickness="1"
                                 BorderBrush="Transparent">
             <StackPanel Orientation="Horizontal">
-                <fa:SvgAwesome Height="16" Icon="Solid_Check" Foreground="White" Margin="0,0,5,0">
+                <fa:SvgAwesome x:Name="ico" Height="16" Icon="{TemplateBinding Property=Tag}" Foreground="White" Margin="2,0,5,0">
                     <fa:SvgAwesome.Effect>
                         <DropShadowEffect ShadowDepth="2" BlurRadius="3" Color="Orange"/>
                     </fa:SvgAwesome.Effect>
                 </fa:SvgAwesome>
-                <ContentPresenter x:Name="content" HorizontalAlignment="Center"/>
+                <ContentPresenter x:Name="content" 
+                                  Margin="{TemplateBinding Padding}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </StackPanel>
         </Border>
         <ControlTemplate.Triggers>
@@ -29,12 +36,15 @@
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter TargetName="border" Property="BorderBrush" Value="DarkOrange"/>
-                <Setter TargetName="border" Property="Background" Value="OrangeRed"/>
+                <Setter TargetName="border" Property="Background" Value="#e68a19"/>
+                <Setter TargetName="ico" Property="Effect" Value="{StaticResource ShadowEffectRed}">
+                </Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Background" TargetName="border" Value="LightGray"/>
-                <Setter Property="BorderBrush" TargetName="border" Value="White"/>
-                <Setter Property="TextElement.Foreground" TargetName="content" Value="Gray"/>
+                <Setter TargetName="border" Property="Background" Value="LightGray"/>
+                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                <Setter TargetName="content" Property="TextElement.Foreground" Value="Gray"/>
+                <Setter TargetName="ico" Property="Effect" Value="{StaticResource ShadowEffectLightGray}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -44,48 +54,4 @@
         <Setter Property="Template" Value="{StaticResource CustomButtonTemplate}"/>
     </Style>
 
-    <Style x:Key="SecondaryButton" TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                                Padding="5"
-                                SnapsToDevicePixels="True"
-                                Background="Wheat"
-                                BorderThickness="1"
-                                BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:SvgAwesome x:Name="ico" Height="16" Icon="Solid_Times" Foreground="White" Margin="0,0,5,0">
-                                <fa:SvgAwesome.Effect>
-                                    <DropShadowEffect ShadowDepth="2" BlurRadius="3" Color="Orange"/>
-                                </fa:SvgAwesome.Effect>
-                            </fa:SvgAwesome>
-                            <ContentPresenter x:Name="content" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="DarkOrange"/>
-                            <Setter TargetName="border" Property="Background" Value="Orange"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="DarkOrange"/>
-                            <Setter TargetName="border" Property="Background" Value="OrangeRed"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="LightGray"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="White"/>
-                            <Setter Property="TextElement.Foreground" TargetName="content" Value="Gray"/>
-                            <Setter TargetName="ico" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="2" BlurRadius="3" Color="LightGray"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-    </Style>
 </ResourceDictionary>
