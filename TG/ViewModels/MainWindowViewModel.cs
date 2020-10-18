@@ -195,6 +195,16 @@ namespace TG.ViewModels
 
         #endregion
 
+        #region ChangeMutableProperty : Изменение пробного свойства
+        /// <summary> Изменение пробного свойства </summary>
+        public ICommand ChangeMutablePropertyCommand { get; }
+        private bool CanChangeMutablePropertyCommandExecute(object p) => true;
+        private void OnChangeMutablePropertyCommandExecuted(object p)
+        {
+            MutableProperty = !MutableProperty;
+        }
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
@@ -208,6 +218,8 @@ namespace TG.ViewModels
             CreateDepartmentCommand = new LambdaCommand(OnCreateDepartmentCommandExecuted, CanCreateDepartmentCommandExecute);
 
             DeleteDepartmentCommand = new LambdaCommand(OnDeleteDepartmentCommandExecuted, CanDeleteDepartmentCommandExecute);
+
+            ChangeMutablePropertyCommand = new LambdaCommand(OnChangeMutablePropertyCommandExecuted, CanChangeMutablePropertyCommandExecute);
 
             #endregion
 

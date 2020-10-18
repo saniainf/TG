@@ -48,7 +48,7 @@
 
             <Separator/>
 
-            <ToggleButton Width="25" Height="25" IsChecked="{Binding MutableProperty}">
+            <ToggleButton Width="25" Height="25">
                 <ToggleButton.Template>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <ContentPresenter/>
@@ -71,6 +71,32 @@
                     </ControlTemplate>
                 </ToggleButton.Template>
             </ToggleButton>
+
+            <Separator/>
+
+            <Button Width="25" Height="25" Command="{Binding ChangeMutablePropertyCommand}">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter/>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding MutableProperty}" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <fa:ImageAwesome Icon="Solid_Play" Foreground="Red"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MutableProperty}" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <fa:ImageAwesome Icon="Solid_Pause" Foreground="Green"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
             <Separator/>
 
