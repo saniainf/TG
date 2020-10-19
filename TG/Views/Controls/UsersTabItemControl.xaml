@@ -21,16 +21,22 @@
 
         <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
             <DockPanel>
+                <DockPanel.Resources>
+                    <CollectionViewSource x:Key="DepartmentsCollection" 
+                                          x:Name="DepartmentsCollection"
+                                          Source="{Binding Departments}"
+                                          Filter="DepartmentCollection_OnFilter"/>
+                </DockPanel.Resources>
                 <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
                     <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,5,0"/>
-                    <TextBox/>
+                    <TextBox Name="DepartmentNameFilterText" TextChanged="OnDepartmentFilterTextChanged"/>
                 </DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
                     <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
                     <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
                 </UniformGrid>
                 <ListBox Margin="5,5,5,0" 
-                        ItemsSource="{Binding Departments}" 
+                        ItemsSource="{Binding Source={StaticResource DepartmentsCollection}}" 
                         SelectedItem="{Binding SelectedDepartment}" 
                         SelectedIndex="0"
                         ItemContainerStyle="{StaticResource ContainerStyle}">

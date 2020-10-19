@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TG.Models.Company;
 
 namespace TG.Views.Controls
 {
@@ -21,6 +13,27 @@ namespace TG.Views.Controls
         public UsersTabItemControl()
         {
             InitializeComponent();
+        }
+
+        private void DepartmentCollection_OnFilter(object sender, FilterEventArgs e)
+        {
+            if (!(e.Item is Department department)) return;
+            if (department.Name is null) return;
+
+            var filterText = DepartmentNameFilterText.Text;
+            if (string.IsNullOrEmpty(filterText)) return;
+
+            if (department.Name.Contains(filterText, System.StringComparison.OrdinalIgnoreCase)) return;
+            if (department.Description != null && department.Description.Contains(filterText, System.StringComparison.OrdinalIgnoreCase)) return;
+
+            e.Accepted = false;
+        }
+
+        private void OnDepartmentFilterTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            var collection = (CollectionViewSource)textBox.FindResource("DepartmentsCollection");
+            collection.View.Refresh();
         }
     }
 }
