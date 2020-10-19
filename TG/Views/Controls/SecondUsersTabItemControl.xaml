@@ -53,7 +53,7 @@
                                 <TextBlock Text="{Binding Name}" x:Name="TextView"/>
                                 <TextBlock Text="{Binding Users.Count, StringFormat={}  [Пользователей: {0}]}"/>
                             </StackPanel>
-                         </DataTemplate>
+                        </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </DockPanel>
@@ -78,33 +78,6 @@
                         MinRowHeight="26" 
                         SelectionMode="Single"
                         CellStyle="{StaticResource DataGridContentCellCentering}">
-                    <!--внешний вид выделенных строк
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gray"/>
-                            </DataGrid.Resources>
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                            </DataGrid.Resources>
-                            <DataGrid.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="White" />
-                                            <Setter Property="Foreground" Value="Black" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.CellStyle>
-                            <DataGrid.RowStyle>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="BorderBrush" Value="Orange" />
-                                            <Setter Property="BorderThickness" Value="1" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.RowStyle>-->
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFEDCC"/>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
@@ -113,13 +86,7 @@
                         <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
-                        <!--<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>-->
                         <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="False">
-                            <!--<DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate DataType="company:User">
-                                            <DatePicker SelectedDate="{Binding Birthday}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>-->
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="company:User">
                                     <TextBlock Text="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>

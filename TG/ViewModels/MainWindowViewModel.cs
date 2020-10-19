@@ -112,6 +112,14 @@ namespace TG.ViewModels
 
         #endregion
 
+        public IEnumerable<User> GetUsers =>
+            Enumerable.Range(1, App.IsDesignMode ? 10 : 100000)
+            .Select(i => new User()
+            {
+                Name = $"Имя {i}",
+                Surname = $"Фамилия {i}"
+            });
+
         #endregion
 
         #region Команды
