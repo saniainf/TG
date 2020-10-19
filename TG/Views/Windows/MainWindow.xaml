@@ -6,6 +6,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:cmd="clr-namespace:TG.Infrastructure.Commands"
+        xmlns:controls="clr-namespace:TG.Views.Controls"
         xmlns:company="clr-namespace:TG.Models.Company"
         xmlns:vm="clr-namespace:TG.ViewModels" 
         mc:Ignorable="d"
@@ -138,149 +139,11 @@
         <TabControl x:Name="MainTabControl" Margin="0,0,0,5" SelectedIndex="{Binding SelectedPageIndex}">
 
             <TabItem Header="Разнородные данные">
-                <Grid>
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.MergedDictionaries>
-                                <ResourceDictionary Source="../../Resources/DataTemplates/CompositeListItemsDataTemplates.xaml"/>
-                            </ResourceDictionary.MergedDictionaries>
-                        </ResourceDictionary>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <GroupBox Grid.Column="0" Header="Элементы" Margin="5,0,5,5">
-                        <ListBox ItemsSource="{Binding CompositeCollection}" 
-                                 SelectedItem="{Binding SelectedCompositeValue}" 
-                                 Margin="3">
-                        </ListBox>
-                    </GroupBox>
-
-                    <GroupBox Grid.Column="1" Header="Выбранный элемент" Margin="0,0,5,5">
-                        <ContentControl Content="{Binding SelectedCompositeValue}" 
-                                        FontSize="30" 
-                                        HorizontalAlignment="Center" 
-                                        VerticalAlignment="Center">
-                        </ContentControl>
-                    </GroupBox>
-
-                </Grid>
+                <controls:CompositeCollectionTabItemControl/>
             </TabItem>
 
             <TabItem Header="Пользователи">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
-                        <DockPanel>
-                            <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
-                                <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource PrimaryButton}"/>
-                                <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
-                            </UniformGrid>
-                            <ListBox Margin="5,5,5,0" 
-                                 ItemsSource="{Binding Departments}" 
-                                 SelectedItem="{Binding SelectedDepartment}" 
-                                 SelectedIndex="0"
-                                 ItemContainerStyle="{StaticResource ContainerStyle}">
-                                <!--DisplayMemberPath="Name"-->
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="company:Department">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" x:Name="TextView"/>
-                                            <TextBlock Text="{Binding Users.Count, StringFormat={}  [Пользователей: {0}]}"/>
-                                        </StackPanel>
-                                        <!-- чето не фурычит, надо перекинуть в стили
-                                        <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding Users.Count}" Value="0">
-                                                <Setter TargetName="TextView" Property="Foreground" Value="Red"/>
-                                            </DataTrigger>
-                                        </DataTemplate.Triggers>
-                                        -->
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </DockPanel>
-                    </GroupBox>
-
-                    <GroupBox Grid.Column="1" 
-                              HeaderStringFormat="Пользователи - отдел &quot;{0}&quot;" 
-                              Header="{Binding SelectedDepartment.Name, FallbackValue='Пользователи', TargetNullValue='Отдел не выбран'}" 
-                              Margin="0,0,5,5">
-                        <DataGrid Margin="5" 
-                                  ItemsSource="{Binding SelectedDepartment.Users}" 
-                                  AutoGenerateColumns="False"
-                                  CanUserAddRows="False"
-                                  GridLinesVisibility="Vertical"
-                                  VerticalGridLinesBrush="DarkGray"
-                                  AlternatingRowBackground="#FFE6E2E2"
-                                  MinRowHeight="26" 
-                                  SelectionMode="Single"
-                                  CellStyle="{StaticResource DataGridContentCellCentering}">
-                            <!--внешний вид выделенных строк
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gray"/>
-                            </DataGrid.Resources>
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                            </DataGrid.Resources>
-                            <DataGrid.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="White" />
-                                            <Setter Property="Foreground" Value="Black" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.CellStyle>
-                            <DataGrid.RowStyle>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="BorderBrush" Value="Orange" />
-                                            <Setter Property="BorderThickness" Value="1" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.RowStyle>-->
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFFF8000"/>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
-                            </DataGrid.Resources>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
-                                <!--<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>-->
-                                <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="False">
-                                    <!--<DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate DataType="company:User">
-                                            <DatePicker SelectedDate="{Binding Birthday}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>-->
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate DataType="company:User">
-                                            <TextBlock Text="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate DataType="company:User">
-                                            <DatePicker SelectedDate="{Binding Birthday}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Отдел" Binding="{Binding DataContext.SelectedDepartment.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Заметки" Binding="{Binding Description}" Width="*" IsReadOnly="False"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
-                </Grid>
+                <controls:UsersTabItemControl/>
             </TabItem>
 
             <TabItem>
@@ -294,33 +157,9 @@
                         </Button>
                     </StackPanel>
                 </TabItem.Header>
-
-                <Button Content="Click Me" 
-                        Style="{StaticResource PrimaryButton}" 
-                        Width="150" Height="50"
-                        RenderTransformOrigin="0.5,0.5">
-                    <Button.RenderTransform>
-                        <ScaleTransform x:Name="ButtonScale" ScaleY="1"/>
-                    </Button.RenderTransform>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="ButtonScale"
-                                                     Storyboard.TargetProperty="ScaleY"
-                                                     To="0.8" By="-0.01"
-                                                     Duration="0:0:0.1"
-                                                     AutoReverse="True"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Button.Triggers>
-                </Button>
-
+                <controls:TestTabItemControl/>
             </TabItem>
-
+            
         </TabControl>
-
     </DockPanel>
-
 </Window>
