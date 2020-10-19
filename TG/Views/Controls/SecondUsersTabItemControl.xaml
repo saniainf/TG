@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="TG.Views.Controls.SecondUsersTabItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
+             xmlns:local="clr-namespace:TG.Views.Controls"
+             xmlns:vm="clr-namespace:TG.ViewModels" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <vm:MainWindowViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0" Header="Отделы" Margin="5,0,5,5">
+            <DockPanel>
+                <DockPanel.Resources>
+                    <CollectionViewSource x:Key="DepartmentsCollection" 
+                                          x:Name="DepartmentsCollection"
+                                          Source="{Binding Departments}"
+                                          Filter="DepartmentCollection_OnFilter"/>
+                </DockPanel.Resources>
+                <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
+                    <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,5,0"/>
+                    <TextBox Name="DepartmentNameFilterText" TextChanged="OnDepartmentFilterTextChanged"/>
+                </DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5">
+                    <Button Content="Добавить" Command="{Binding CreateDepartmentCommand}" Style="{StaticResource ButtonBase}"/>
+                    <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource ButtonBase}"/>
+                </UniformGrid>
+                <ListBox Margin="5,5,5,0" 
+                        ItemsSource="{Binding Source={StaticResource DepartmentsCollection}}" 
+                        SelectedItem="{Binding SelectedDepartment}" 
+                        SelectedIndex="0"
+                         VirtualizingPanel.IsContainerVirtualizable="True"
+                         VirtualizingPanel.IsVirtualizing="True"
+                         VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="company:Department">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" x:Name="TextView"/>
+                                <TextBlock Text="{Binding Users.Count, StringFormat={}  [Пользователей: {0}]}"/>
+                            </StackPanel>
+                         </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" 
+                    HeaderStringFormat="Пользователи - отдел &quot;{0}&quot;" 
+                    Header="{Binding SelectedDepartment.Name, FallbackValue='Пользователи', TargetNullValue='Отдел не выбран'}" 
+                    Margin="0,0,5,5">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
+                    <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,5,0"/>
+                    <TextBox/>
+                </DockPanel>
+                <DataGrid Margin="5" 
+                        ItemsSource="{Binding SelectedDepartment.Users}" 
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        GridLinesVisibility="Vertical"
+                        VerticalGridLinesBrush="LightGray"
+                        AlternatingRowBackground="#FFF1F1F1"
+                        MinRowHeight="26" 
+                        SelectionMode="Single"
+                        CellStyle="{StaticResource DataGridContentCellCentering}">
+                    <!--внешний вид выделенных строк
+                            <DataGrid.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gray"/>
+                            </DataGrid.Resources>
+                            <DataGrid.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                            </DataGrid.Resources>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="White" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderBrush" Value="Orange" />
+                                            <Setter Property="BorderThickness" Value="1" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>-->
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFEDCC"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
+                        <!--<DataGridTextColumn Header="Дата рождения" Binding="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>-->
+                        <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="False">
+                            <!--<DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="company:User">
+                                            <DatePicker SelectedDate="{Binding Birthday}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>-->
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="company:User">
+                                    <TextBlock Text="{Binding Birthday, StringFormat=dd MMMM yyyy}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate DataType="company:User">
+                                    <DatePicker SelectedDate="{Binding Birthday}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Отдел" Binding="{Binding DataContext.SelectedDepartment.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Заметки" Binding="{Binding Description}" Width="*" IsReadOnly="False"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>
