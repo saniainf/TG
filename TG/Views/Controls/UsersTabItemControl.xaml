@@ -36,11 +36,19 @@
                     <Button Content="Удалить" Command="{Binding DeleteDepartmentCommand}" CommandParameter="{Binding SelectedDepartment}" Style="{StaticResource PrimaryButton}"/>
                 </UniformGrid>
                 <ListBox Margin="5,5,5,0" 
-                        ItemsSource="{Binding Source={StaticResource DepartmentsCollection}}" 
-                        SelectedItem="{Binding SelectedDepartment}" 
-                        SelectedIndex="0"
-                        ItemContainerStyle="{StaticResource ContainerStyle}">
+                         ItemsSource="{Binding Source={StaticResource DepartmentsCollection}}" 
+                         SelectedItem="{Binding SelectedDepartment}" 
+                         SelectedIndex="0"
+                         ItemContainerStyle="{StaticResource ContainerStyle}"
+                         VirtualizingPanel.IsContainerVirtualizable="True"
+                         VirtualizingPanel.IsVirtualizing="True"
+                         VirtualizingPanel.VirtualizationMode="Recycling">
                     <!--DisplayMemberPath="Name"-->
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="company:Department">
                             <StackPanel Orientation="Horizontal">
@@ -70,15 +78,15 @@
                     <TextBox/>
                 </DockPanel>
                 <DataGrid Margin="5" 
-                        ItemsSource="{Binding SelectedDepartment.Users}" 
-                        AutoGenerateColumns="False"
-                        CanUserAddRows="False"
-                        GridLinesVisibility="Vertical"
-                        VerticalGridLinesBrush="LightGray"
-                        AlternatingRowBackground="#FFF1F1F1"
-                        MinRowHeight="26" 
-                        SelectionMode="Single"
-                        CellStyle="{StaticResource DataGridContentCellCentering}">
+                          ItemsSource="{Binding SelectedDepartment.Users}" 
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          GridLinesVisibility="Vertical"
+                          VerticalGridLinesBrush="LightGray"
+                          AlternatingRowBackground="#FFF1F1F1"
+                          MinRowHeight="26" 
+                          SelectionMode="Single"
+                          CellStyle="{StaticResource DataGridContentCellCentering}">
                     <!--внешний вид выделенных строк
                             <DataGrid.Resources>
                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gray"/>

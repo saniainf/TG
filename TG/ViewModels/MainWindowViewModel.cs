@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using TG.Infrastructure.Commands;
@@ -42,7 +44,12 @@ namespace TG.ViewModels
         public Department SelectedDepartment
         {
             get => department;
-            set => Set(ref department, value);
+            set
+            {
+                if (!Set(ref department, value)) return;
+                selectedDepartmentUsers.Source = value?.Users;
+                OnPropertyChanged(nameof(SelectedDepartmentUsers));
+            }
         }
 
         #endregion
@@ -112,6 +119,7 @@ namespace TG.ViewModels
 
         #endregion
 
+        #region GetUsers : большое количество пользователей
         public IEnumerable<User> GetUsers =>
             Enumerable.Range(1, App.IsDesignMode ? 10 : 100000)
             .Select(i => new User()
@@ -119,6 +127,54 @@ namespace TG.ViewModels
                 Name = $"Имя {i}",
                 Surname = $"Фамилия {i}"
             });
+        #endregion
+
+        #region UserFilterText : текст фильтра пользователей
+        /// <summary> текст фильтра пользователей </summary>
+        private string _UserFilterText;
+        /// <summary> текст фильтра пользователей </summary>
+        public string UserFilterText
+        {
+            get => _UserFilterText;
+            set
+            {
+                if (!Set(ref _UserFilterText, value)) return;
+                selectedDepartmentUsers.View.Refresh();
+            }
+        }
+        #endregion
+
+        #region SelectedDepartmentUsers : фильтрация пользователей через модель представления
+
+        private CollectionViewSource selectedDepartmentUsers = new CollectionViewSource();
+
+        public ICollectionView SelectedDepartmentUsers => selectedDepartmentUsers?.View;
+
+        private void OnUsersFiltred(object sender, FilterEventArgs e)
+        {
+            if (!(e.Item is User user))
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            var filterText = UserFilterText;
+            if (string.IsNullOrWhiteSpace(filterText)) return;
+
+            if (user.Name is null || user.Patronymic is null || user.Surname is null)
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            if (user.Name.Contains(filterText, StringComparison.OrdinalIgnoreCase)) return;
+            if (user.Surname.Contains(filterText, StringComparison.OrdinalIgnoreCase)) return;
+            if (user.Patronymic.Contains(filterText, StringComparison.OrdinalIgnoreCase)) return;
+
+            e.Accepted = false;
+        }
+
+        #endregion
 
         #endregion
 
@@ -235,7 +291,7 @@ namespace TG.ViewModels
 
             var idx = 0;
 
-            var users = Enumerable.Range(1, 15).Select(i => new User()
+            var users = Enumerable.Range(1, App.IsDesignMode ? 15 : 100).Select(i => new User()
             {
                 Name = "John",
                 Patronymic = $"Johnovich",
@@ -244,7 +300,7 @@ namespace TG.ViewModels
                 Rating = 1,
                 Description = "Пользователь Ok"
             });
-            var departments = Enumerable.Range(1, 10).Select(i => new Department()
+            var departments = Enumerable.Range(1, App.IsDesignMode ? 10 : 1000).Select(i => new Department()
             {
                 Users = users.ToArray(),
                 Name = $"Отдел №{i:d2}",
@@ -262,6 +318,10 @@ namespace TG.ViewModels
             CompositeCollection = dataList.ToArray();
 
             #endregion
+
+            selectedDepartmentUsers.Filter += OnUsersFiltred;
+
+            selectedDepartmentUsers.SortDescriptions.Add(new SortDescription("Surname", ListSortDirection.Descending));
         }
     }
 }

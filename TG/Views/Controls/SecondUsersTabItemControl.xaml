@@ -66,10 +66,10 @@
             <DockPanel>
                 <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
                     <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,5,0"/>
-                    <TextBox/>
+                    <TextBox Text="{Binding UserFilterText, UpdateSourceTrigger=PropertyChanged}"/>
                 </DockPanel>
                 <DataGrid Margin="5" 
-                        ItemsSource="{Binding SelectedDepartment.Users}" 
+                        ItemsSource="{Binding SelectedDepartmentUsers}" 
                         AutoGenerateColumns="False"
                         CanUserAddRows="False"
                         GridLinesVisibility="Vertical"
