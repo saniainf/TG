@@ -138,6 +138,10 @@
 
         <TabControl x:Name="MainTabControl" Margin="0,0,0,5" SelectedIndex="{Binding SelectedPageIndex}">
 
+            <TabItem Header="Файловая система">
+                <controls:FileSystemTabItemControl/>
+            </TabItem>
+            
             <TabItem Header="Пользователи с поиском">
                 <controls:SecondUsersTabItemControl/>
             </TabItem>
