@@ -143,6 +143,13 @@
                         <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Отдел" Binding="{Binding DataContext.SelectedDepartment.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Заметки" Binding="{Binding Description}" Width="*" IsReadOnly="False"/>
+                        <DataGridTemplateColumn Header="Иконка" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <fa:ImageAwesome Icon="{Binding AwesomeIcon}" Height="10"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>

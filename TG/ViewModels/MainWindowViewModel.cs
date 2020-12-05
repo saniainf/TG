@@ -11,11 +11,14 @@ using System.Windows.Input;
 using TG.Infrastructure.Commands;
 using TG.Models.Company;
 using TG.ViewModels.Base;
+using FontAwesome5;
 
 namespace TG.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+
+        Random rnd;
 
         #region Свойства
 
@@ -286,6 +289,8 @@ namespace TG.ViewModels
 
         public MainWindowViewModel()
         {
+            rnd = new Random();
+
             #region Команды
 
             CloseAplicationCommand = new LambdaCommand(OnCloseAplicationCommandExecuted, CanCloseAplicationCommandExecute);
@@ -311,7 +316,8 @@ namespace TG.ViewModels
                 Surname = $"Smith_{idx++:d2}",
                 Birthday = DateTime.Now,
                 Rating = 1,
-                Description = "Пользователь Ok"
+                Description = "Пользователь Ok",
+                AwesomeIcon = (EFontAwesomeIcon)rnd.Next(1, 300)
             });
             var departments = Enumerable.Range(1, App.IsDesignMode ? 10 : 1000).Select(i => new Department()
             {

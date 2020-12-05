@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FontAwesome5;
 
 namespace TG.Models.Company
 {
@@ -16,6 +17,8 @@ namespace TG.Models.Company
         public double Rating { get; set; }
 
         public string Description { get; set; }
+
+        public EFontAwesomeIcon AwesomeIcon { get; set; }
     }
 
     internal class Department
